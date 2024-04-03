@@ -1,3 +1,2 @@
-export function multiply(a: number, b: number): Promise<number> {
-  return Promise.resolve(a * b);
-}
+export { toast } from './helpers/toastManager';
+export { default as ToastProvider } from './components/ToastProvider';
