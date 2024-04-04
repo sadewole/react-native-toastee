@@ -3,20 +3,20 @@ import * as React from 'react';
 import { StyleSheet, View, Button, Switch, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ToastProvider, toast, ToastUIView } from 'react-native-toastify';
+import { ToastProvider, toast, ToastUIView } from 'react-native-toastee';
 
 export default function App() {
   const [isTopPosition, setIsTopPosition] = React.useState(true);
   const [isVisible, setIsVisible] = React.useState(false);
 
   const handleToast = () => {
-    toast('Hello from react-native-toastify');
+    toast('Hello from react-native-toastee');
   };
   const handleSuccessToast = () =>
-    toast('Hello from react-native-toastify', 'success');
+    toast('Hello from react-native-toastee', 'success');
 
   const handleFailedToast = () =>
-    toast('Hello from react-native-toastify', 'error');
+    toast('Hello from react-native-toastee', 'error');
 
   const toggleCustomToast = () => setIsVisible(!isVisible);
 

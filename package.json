@@ -1,5 +1,5 @@
 {
-  "name": "react-native-toastify",
+  "name": "react-native-toastee",
   "version": "0.1.0",
   "description": "A react-native toast notification with features like swipeable, auto dismiss, close button and positional",
   "main": "lib/commonjs/index",
@@ -26,7 +26,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-toastify-example",
+    "example": "yarn workspace react-native-toastee-example",
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -41,14 +41,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sadewole/react-native-toastify.git"
+    "url": "git+https://github.com/sadewole/react-native-toastee.git"
   },
   "author": "Samador <samueladewole15@gmail.com> (https://github.com/sadewole)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sadewole/react-native-toastify/issues"
+    "url": "https://github.com/sadewole/react-native-toastee/issues"
   },
-  "homepage": "https://github.com/sadewole/react-native-toastify#readme",
+  "homepage": "https://github.com/sadewole/react-native-toastee#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },

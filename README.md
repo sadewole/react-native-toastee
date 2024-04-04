@@ -1,4 +1,4 @@
-# react-native-toastify
+# react-native-toastee
 
 A react-native toast notification with features like swipeable, auto dismiss, and toast positioning
 
@@ -13,9 +13,9 @@ A react-native toast notification with features like swipeable, auto dismiss, an
 ## Installation
 
 ```sh
-npm install react-native-toastify
+npm install react-native-toastee
 # or
-yarn add react-native-toastify
+yarn add react-native-toastee
 ```
 
 ## Peer Dependencies Installation
@@ -33,11 +33,11 @@ Render the `<ToastProvider />` in the root of your app. Then, you can call the `
 ```js
 // App.js
 // ... hidden imports
-import { ToastProvider, toast } from 'react-native-toastify';
+import { ToastProvider, toast } from 'react-native-toastee';
 
 export const App () => {
   const handleToast = () => {
-    toast('Hello from react-native-toastify');
+    toast('Hello from react-native-toastee');
   };
 
     return (
@@ -86,19 +86,19 @@ To show a toast, call the function `toast()` from anywhere in the app. Ensure th
 #### Default (success)
 
 ```sh
-  toast('Hello from react-native-toastify');
+  toast('Hello from react-native-toastee');
 ```
 
 #### Success
 
 ```sh
-  toast('Hello from react-native-toastify', 'success');
+  toast('Hello from react-native-toastee', 'success');
 ```
 
 #### Error
 
 ```sh
-  toast('Hello from react-native-toastify', 'error');
+  toast('Hello from react-native-toastee', 'error');
 ```
 
 ## `<ToastUIView />`
@@ -110,7 +110,7 @@ To create a custom toast that is specific to a screen, you can use the `<ToastUI
 ```js
 import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
-import { ToastUIView } from 'react-native-toastify';
+import { ToastUIView } from 'react-native-toastee';
 
 export const App = () => {
   const [isVisible, setIsVisible] = React.useState(false);
