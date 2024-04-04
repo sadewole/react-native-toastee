@@ -6,7 +6,12 @@ import type { ToastProps, ToastPreset } from '../utils/type';
 type Props = Omit<ToastProps, 'visible' | 'message' | 'preset' | 'onDismiss'>;
 
 const ToastProvider = (props: Partial<Props>) => {
-  const { position = 'top', autoDismiss = 3000, ...rest } = props;
+  const {
+    position = 'top',
+    autoDismiss = 3000,
+    zIndex = 1500,
+    ...rest
+  } = props;
   const [toastMessage, setToastMessage] = useState<string>('');
   const [toastType, setToastType] = useState<ToastPreset>('success');
 
@@ -32,7 +37,7 @@ const ToastProvider = (props: Partial<Props>) => {
       onDismiss={reset}
       autoDismiss={autoDismiss}
       preset={toastType}
-      zIndex={1500}
+      zIndex={zIndex}
       visible={!!toastMessage}
       {...rest}
     />

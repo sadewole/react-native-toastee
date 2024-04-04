@@ -17,6 +17,6 @@ export type ToastProps = {
   zIndex?: number;
 };
 
-export type ToastPreset = 'success' | 'failure';
+export type ToastPreset = 'success' | 'error';
 
 export type ToastPosition = 'top' | 'bottom';

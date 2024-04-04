@@ -16,7 +16,7 @@ export default function App() {
     toast('Hello from react-native-toastify', 'success');
 
   const handleFailedToast = () =>
-    toast('Hello from react-native-toastify', 'failure');
+    toast('Hello from react-native-toastify', 'error');
 
   const toggleCustomToast = () => setIsVisible(!isVisible);
 
