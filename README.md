@@ -2,6 +2,8 @@
 
 A react-native toast notification with features like swipeable, auto dismiss, and toast positioning
 
+<image src="./demo-crop.gif" />
+
 ## Features
 
 - 🛠️ **Flexible setup**
