@@ -3,10 +3,12 @@ import * as React from 'react';
 import { StyleSheet, View, Button, Switch, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ToastProvider, toast } from 'react-native-toastify';
+import { ToastProvider, toast, ToastUIView } from 'react-native-toastify';
 
 export default function App() {
   const [isTopPosition, setIsTopPosition] = React.useState(true);
+  const [isVisible, setIsVisible] = React.useState(false);
+
   const handleToast = () => {
     toast('Hello from react-native-toastify');
   };
@@ -16,11 +18,13 @@ export default function App() {
   const handleFailedToast = () =>
     toast('Hello from react-native-toastify', 'failure');
 
+  const toggleCustomToast = () => setIsVisible(!isVisible);
+
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
+          <View style={styles.position}>
             <Text>Top Position: </Text>
             <Switch
               trackColor={{ false: '#393939', true: '#00AD50' }}
@@ -30,11 +34,23 @@ export default function App() {
               value={isTopPosition}
             />
           </View>
-          <Button title="Default toast" onPress={handleToast} />
-          <Button title="Success toast" onPress={handleSuccessToast} />
-          <Button title="Error toast" onPress={handleFailedToast} />
+          <Button title="Default Toast" onPress={handleToast} />
+          <Button title="Success Toast" onPress={handleSuccessToast} />
+          <Button title="Error Toast" onPress={handleFailedToast} />
+          <Button title="Custom Toast" onPress={toggleCustomToast} />
         </View>
+
+        {/* TOASTS */}
         <ToastProvider position={isTopPosition ? 'top' : 'bottom'} />
+        <ToastUIView
+          position="top"
+          autoDismiss={5000}
+          message="This is a custom toast"
+          onDismiss={toggleCustomToast}
+          style={{ backgroundColor: 'white' }}
+          preset="success"
+          visible={isVisible}
+        />
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
@@ -46,9 +62,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  position: {
+    flexDirection: 'row',
+    gap: 16,
+    alignItems: 'center',
+    marginBottom: 15,
   },
 });

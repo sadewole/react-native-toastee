@@ -25,14 +25,19 @@ const ToastView = (props: ToastProps) => {
   const { top, bottom } = useSafeAreaInsets();
   const isTop = position === 'top';
 
-  // REFs
-  const gesturePanViewRef = React.useRef<GesturePanViewRefProps>(null);
-  const direction = React.useRef(
-    props.position === 'bottom' ? PanDirectionsEnum.DOWN : PanDirectionsEnum.UP
-  ).current;
   // STATEs
   const [toastHeight, setToastHeight] = React.useState<number>(500);
+  // REFs
+  const gesturePanViewRef = React.useRef<GesturePanViewRefProps>(null);
   const toastAnimatedValue = React.useRef(new Animated.Value(0));
+
+  const direction = React.useMemo(
+    () =>
+      props.position === 'bottom'
+        ? PanDirectionsEnum.DOWN
+        : PanDirectionsEnum.UP,
+    [props.position]
+  );
 
   const { clearTimer, setTimer } = useTimer({ onDismiss, autoDismiss });
   const presetColor = colors[preset];
@@ -74,6 +79,10 @@ const ToastView = (props: ToastProps) => {
     inputRange: [0, 1],
     outputRange: [startOutputRange, 0],
   });
+  const opacity = toastAnimatedValue.current.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
 
   const toastContainerStyle = React.useMemo(
     () => ({
@@ -84,8 +93,9 @@ const ToastView = (props: ToastProps) => {
           translateY: toastTranslateY,
         },
       ],
+      opacity,
     }),
-    [zIndex, position, toastTranslateY]
+    [zIndex, position, toastTranslateY, opacity]
   );
 
   React.useEffect(() => {
@@ -155,8 +165,9 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   presetBar: {
-    width: 4,
+    width: 5,
     height: '100%',
+    borderRadius: 12,
   },
 });
 
