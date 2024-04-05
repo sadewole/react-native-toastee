@@ -154,7 +154,7 @@ const GesturePanView = React.forwardRef<
           style={[
             animatedStyle,
             styles.toastContent,
-            { backgroundColor: backgroundColor ?? '#fff' },
+            { backgroundColor },
             style,
           ]}
         >

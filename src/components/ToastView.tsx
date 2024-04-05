@@ -8,7 +8,7 @@ import {
 import GesturePanView, { type GesturePanViewRefProps } from './GesturePanView';
 import { PanDirectionsEnum, type ToastProps } from '../utils/type';
 import { useTimer } from '../helpers/useTimer';
-import { colors } from '../utils/styles';
+import { presetColors } from '../utils/styles';
 
 const ToastView = (props: ToastProps) => {
   const {
@@ -45,10 +45,7 @@ const ToastView = (props: ToastProps) => {
 
   const { clearTimer, setTimer } = useTimer({ onDismiss, autoDismiss });
 
-  const presetColor = React.useMemo(
-    () => (preset !== 'default' ? colors[preset] : undefined),
-    [preset]
-  );
+  const presetColor = React.useMemo(() => presetColors[preset], [preset]);
 
   const onLayout = React.useCallback(
     (event: LayoutChangeEvent) => {
@@ -128,7 +125,9 @@ const ToastView = (props: ToastProps) => {
   };
   const renderIcon = () => {
     return (
-      <View style={[styles.presetBar, { backgroundColor: presetColor }]} />
+      <View
+        style={[styles.presetBar, { backgroundColor: presetColor?.indicator }]}
+      />
     );
   };
 
@@ -147,7 +146,7 @@ const ToastView = (props: ToastProps) => {
             onDismiss={onDismiss}
             clearTimer={clearTimer}
             directions={directions}
-            backgroundColor={!isDefaultPreset ? `${presetColor}30` : undefined}
+            backgroundColor={presetColor?.backgroundColor}
             style={style}
           >
             {!isDefaultPreset && renderIcon()}
