@@ -13,7 +13,7 @@ const ToastProvider = (props: Partial<Props>) => {
     ...rest
   } = props;
   const [toastMessage, setToastMessage] = useState<string>('');
-  const [toastType, setToastType] = useState<ToastPreset>('success');
+  const [toastType, setToastType] = useState<ToastPreset>('default');
 
   useEffect(() => {
     const setToastFunction = (message: string, type: ToastPreset) => {

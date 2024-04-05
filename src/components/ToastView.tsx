@@ -21,9 +21,11 @@ const ToastView = (props: ToastProps) => {
     textStyle,
     autoDismiss,
     zIndex,
+    isHorizontalSwipeable = true,
   } = props;
   const { top, bottom } = useSafeAreaInsets();
   const isTop = position === 'top';
+  const isDefaultPreset = preset === 'default';
 
   // STATEs
   const [toastHeight, setToastHeight] = React.useState<number>(500);
@@ -31,16 +33,22 @@ const ToastView = (props: ToastProps) => {
   const gesturePanViewRef = React.useRef<GesturePanViewRefProps>(null);
   const toastAnimatedValue = React.useRef(new Animated.Value(0));
 
-  const direction = React.useMemo(
-    () =>
-      props.position === 'bottom'
-        ? PanDirectionsEnum.DOWN
-        : PanDirectionsEnum.UP,
-    [props.position]
+  const directions = React.useMemo(
+    () => [
+      position === 'bottom' ? PanDirectionsEnum.DOWN : PanDirectionsEnum.UP,
+      ...(isHorizontalSwipeable
+        ? [PanDirectionsEnum.LEFT, PanDirectionsEnum.RIGHT]
+        : []),
+    ],
+    [isHorizontalSwipeable, position]
   );
 
   const { clearTimer, setTimer } = useTimer({ onDismiss, autoDismiss });
-  const presetColor = colors[preset];
+
+  const presetColor = React.useMemo(
+    () => (preset !== 'default' ? colors[preset] : undefined),
+    [preset]
+  );
 
   const onLayout = React.useCallback(
     (event: LayoutChangeEvent) => {
@@ -138,11 +146,11 @@ const ToastView = (props: ToastProps) => {
             ref={gesturePanViewRef}
             onDismiss={onDismiss}
             clearTimer={clearTimer}
-            direction={direction}
-            backgroundColor={`${presetColor}30`}
+            directions={directions}
+            backgroundColor={!isDefaultPreset ? `${presetColor}30` : undefined}
             style={style}
           >
-            {renderIcon()}
+            {!isDefaultPreset && renderIcon()}
             {renderMessage()}
           </GesturePanView>
         </Animated.View>

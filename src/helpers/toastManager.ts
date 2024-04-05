@@ -19,7 +19,7 @@ class ToastManager {
     ToastManager.toastSetter = setter;
   }
 
-  showToast(message: string, type: ToastPreset = 'success') {
+  showToast(message: string, type: ToastPreset = 'default') {
     if (ToastManager.toastSetter) {
       ToastManager.toastSetter(message, type);
     }

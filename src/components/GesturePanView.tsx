@@ -11,13 +11,16 @@ import Animated, {
 } from 'react-native-reanimated';
 import { PanDirectionsEnum } from '../utils/type';
 
-const Constants = {
+const getDimensions = {
   windowHeight: Dimensions.get('window').height,
+  screenWidth: Dimensions.get('screen').width,
 };
 
 const HIDDEN = {
-  up: -Constants.windowHeight,
-  down: Constants.windowHeight,
+  up: -getDimensions.windowHeight,
+  down: getDimensions.windowHeight,
+  left: -getDimensions.screenWidth,
+  right: getDimensions.screenWidth,
 };
 
 const springConfig = {
@@ -32,7 +35,7 @@ export type GesturePanViewRefProps = {
 };
 
 type GesturePanViewProps = {
-  direction: PanDirectionsEnum;
+  directions: PanDirectionsEnum[];
   clearTimer(): void;
   onDismiss?(): void;
   style?: ViewStyle;
@@ -44,12 +47,13 @@ const GesturePanView = React.forwardRef<
   React.PropsWithChildren<GesturePanViewProps>
 >(
   (
-    { children, direction, clearTimer, backgroundColor, onDismiss, style },
+    { children, directions, clearTimer, backgroundColor, onDismiss, style },
     ref
   ) => {
-    const offsetY = useSharedValue(0);
+    const offset = useSharedValue({ x: 0, y: 0 });
     const waitingForDismiss = useSharedValue(false);
     const translateY = useSharedValue(0);
+    const translateX = useSharedValue(0);
 
     const handleDismiss = React.useCallback(
       (isFinished?: boolean) => {
@@ -68,24 +72,65 @@ const GesturePanView = React.forwardRef<
     const returnToOrigin = React.useCallback(() => {
       'worklet';
 
+      translateX.value = withSpring(0, springConfig);
       translateY.value = withSpring(0, springConfig);
-    }, [translateY]);
+    }, [translateX, translateY]);
 
     useImperativeHandle(ref, () => ({ returnToOrigin }), [returnToOrigin]);
 
     const gesture = Gesture.Pan()
       .onStart(() => {
-        offsetY.value = translateY.value;
+        offset.value = { x: translateX.value, y: translateY.value };
       })
       .onUpdate((event) => {
-        if (direction === PanDirectionsEnum.UP) {
-          translateY.value = Math.min(0, offsetY.value + event.translationY);
-        } else if (direction === PanDirectionsEnum.DOWN) {
-          translateY.value = Math.max(0, offsetY.value + event.translationY);
+        const { translationX, translationY } = event;
+        if (Math.abs(translationX) > Math.abs(translationY)) {
+          const newX = offset.value.x + translationX;
+          if (
+            directions?.includes(PanDirectionsEnum.LEFT) &&
+            directions?.includes(PanDirectionsEnum.RIGHT)
+          ) {
+            translateX.value = newX;
+          } else if (directions?.includes(PanDirectionsEnum.LEFT)) {
+            translateX.value = Math.min(0, newX);
+          } else if (directions?.includes(PanDirectionsEnum.RIGHT)) {
+            translateX.value = Math.max(0, newX);
+          }
+        } else {
+          const newY = offset.value.y + translationY;
+          if (
+            directions?.includes(PanDirectionsEnum.UP) &&
+            directions?.includes(PanDirectionsEnum.DOWN)
+          ) {
+            translateY.value = newY;
+          } else if (directions?.includes(PanDirectionsEnum.UP)) {
+            translateY.value = Math.min(0, newY);
+          } else if (directions?.includes(PanDirectionsEnum.DOWN)) {
+            translateY.value = Math.max(0, newY);
+          }
+        }
+
+        // clamp translation to avoid unnecessary movement
+        if (
+          directions?.includes(PanDirectionsEnum.UP) &&
+          translateY.value < 0
+        ) {
+          translateX.value = 0;
+        }
+        if (
+          directions?.includes(PanDirectionsEnum.DOWN) &&
+          translateY.value > 0
+        ) {
+          translateX.value = 0;
         }
       })
       .onEnd(() => {
         waitingForDismiss.value = true;
+
+        if (translateX.value !== 0) {
+          const toX = translateX.value > 0 ? HIDDEN.right : HIDDEN.left;
+          translateX.value = withTiming(toX, { duration: 100 }, handleDismiss);
+        }
 
         if (translateY.value !== 0) {
           const toY = translateY.value > 0 ? HIDDEN.down : HIDDEN.up;
@@ -95,8 +140,12 @@ const GesturePanView = React.forwardRef<
 
     const animatedStyle = useAnimatedStyle(() => {
       'worklet';
-
-      return { transform: [{ translateY: translateY.value }] };
+      return {
+        transform: [
+          { translateY: translateY.value },
+          { translateX: translateX.value },
+        ],
+      };
     }, []);
 
     return (
@@ -105,7 +154,7 @@ const GesturePanView = React.forwardRef<
           style={[
             animatedStyle,
             styles.toastContent,
-            { backgroundColor },
+            { backgroundColor: backgroundColor ?? '#fff' },
             style,
           ]}
         >
@@ -118,17 +167,17 @@ const GesturePanView = React.forwardRef<
 
 const styles = StyleSheet.create({
   toastContent: {
+    backgroundColor: '#fff',
     minHeight: 48,
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    shadowColor: 'rgba(0,0,0,0.2)',
     shadowOffset: {
       width: 0,
       height: -1,
     },
-    shadowOpacity: 2,
+    shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 4,
 

@@ -7,7 +7,7 @@ A react-native toast notification with features like swipeable, auto dismiss, an
 ## Features
 
 - 🛠️ **Flexible setup**
-- ✅ **Swipeable and auto dismiss**
+- ✅ **Swipeable (Horizontal and Vertical) and auto dismiss**
 - 🔝 **Toast positioning (top & bottom)**
 - 💅 **Customizable**
 - 🙈 **Toast shows complete message. No hidden text**
@@ -85,7 +85,7 @@ To show a toast, call the function `toast()` from anywhere in the app. Ensure th
 
 ### Example usage
 
-#### Default (success)
+#### Default
 
 ```sh
   toast('Hello from react-native-toastee');
@@ -163,8 +163,3 @@ MIT
 ---
 
 Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
-
-### Additional Features (Todos)
-
-- Swipeable left and right
-- Close button to dismiss toast
