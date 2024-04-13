@@ -71,13 +71,14 @@ The component should be rendered at the root of the application.
 // ...
 ```
 
-| Props       | Type             | Default | Description                                                   |
-| ----------- | ---------------- | :-----: | ------------------------------------------------------------- |
-| position    | `top` / `bottom` |  `top`  | Toast position                                                |
-| autoDismiss | `number`         | `3000`  | The time at which the toast will be dismissed in milliseconds |
-| style       | `ViewStyle`      |    -    | Toast Container styling                                       |
-| textStyle   | `TextStyle`      |    -    | Text styling                                                  |
-| zIndex      | `number`         | `1500`  | The z-index of the toast                                      |
+| Props                 | Type             | Default | Description                                                   |
+| --------------------- | ---------------- | :-----: | ------------------------------------------------------------- |
+| position              | `top` / `bottom` |  `top`  | Toast position                                                |
+| autoDismiss           | `number`         | `3000`  | The time at which the toast will be dismissed in milliseconds |
+| style                 | `ViewStyle`      |    -    | Toast Container styling                                       |
+| textStyle             | `TextStyle`      |    -    | Text styling                                                  |
+| zIndex                | `number`         | `1500`  | The z-index of the toast                                      |
+| isHorizontalSwipeable | `boolean`        | `true`  | Allow horizontal swipe                                        |
 
 ## `toast()`
 

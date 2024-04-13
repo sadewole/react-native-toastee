@@ -14,11 +14,13 @@ const ToastProvider = (props: Partial<Props>) => {
   } = props;
   const [toastMessage, setToastMessage] = useState<string>('');
   const [toastType, setToastType] = useState<ToastPreset>('default');
+  const [isVisible, setIsVisible] = React.useState(false);
 
   useEffect(() => {
     const setToastFunction = (message: string, type: ToastPreset) => {
       setToastMessage(message);
       setToastType(type);
+      setIsVisible(true);
     };
     toastManager.setToastFunction(setToastFunction);
     return () => {
@@ -27,7 +29,7 @@ const ToastProvider = (props: Partial<Props>) => {
   }, []);
 
   const reset = () => {
-    setToastMessage('');
+    setIsVisible(false);
   };
 
   return (
@@ -38,7 +40,7 @@ const ToastProvider = (props: Partial<Props>) => {
       autoDismiss={autoDismiss}
       preset={toastType}
       zIndex={zIndex}
-      visible={!!toastMessage}
+      visible={isVisible}
       {...rest}
     />
   );

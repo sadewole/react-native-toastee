@@ -91,19 +91,10 @@ const GesturePanView = React.forwardRef<
             directions?.includes(PanDirectionsEnum.RIGHT)
           ) {
             translateX.value = newX;
-          } else if (directions?.includes(PanDirectionsEnum.LEFT)) {
-            translateX.value = Math.min(0, newX);
-          } else if (directions?.includes(PanDirectionsEnum.RIGHT)) {
-            translateX.value = Math.max(0, newX);
           }
         } else {
           const newY = offset.value.y + translationY;
-          if (
-            directions?.includes(PanDirectionsEnum.UP) &&
-            directions?.includes(PanDirectionsEnum.DOWN)
-          ) {
-            translateY.value = newY;
-          } else if (directions?.includes(PanDirectionsEnum.UP)) {
+          if (directions?.includes(PanDirectionsEnum.UP)) {
             translateY.value = Math.min(0, newY);
           } else if (directions?.includes(PanDirectionsEnum.DOWN)) {
             translateY.value = Math.max(0, newY);
