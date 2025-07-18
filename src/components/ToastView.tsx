@@ -109,12 +109,17 @@ const ToastView = (props: ToastProps) => {
   }, [clearTimer, toggleToast, visible]);
 
   React.useEffect(() => {
-    toastTranslateY.addListener(({ value }) => {
-      if (value === startOutputRange) {
+    const toastRef = toastAnimatedValue.current;
+    const listenerId = toastRef.addListener(({ value }) => {
+      const interpolated = startOutputRange + (0 - startOutputRange) * value;
+
+      if (Math.round(interpolated) === startOutputRange) {
         gesturePanViewRef.current?.returnToOrigin();
       }
     });
-  }, [startOutputRange, toastTranslateY]);
+
+    return () => toastRef.removeListener(listenerId);
+  }, [startOutputRange]);
 
   const renderMessage = () => {
     return (
