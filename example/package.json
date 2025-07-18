@@ -1,7 +1,7 @@
 {
   "name": "react-native-toastee-example",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,21 +9,21 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~50.0.14",
-    "expo-status-bar": "~1.11.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.73.6",
-    "react-native-gesture-handler": "2.14.0",
-    "react-native-reanimated": "3.6.2",
-    "react-native-safe-area-context": "4.8.2",
-    "react-native-web": "~0.19.6"
+    "@expo/metro-runtime": "~5.0.4",
+    "expo": "~53.0.17",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-reanimated": "~3.17.4",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-web": "~0.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@expo/webpack-config": "19.0.1",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-module-resolver": "^5.0.0"
+    "react-native-builder-bob": "^0.40.12",
+    "react-native-monorepo-config": "^0.1.9"
   },
   "private": true
 }

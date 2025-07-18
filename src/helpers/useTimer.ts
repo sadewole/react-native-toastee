@@ -7,7 +7,7 @@ export const useTimer = ({
   autoDismiss: number;
   onDismiss?(): void;
 }) => {
-  const timer = React.useRef<any>();
+  const timer = React.useRef<any>(null);
   const clearTimer = React.useCallback(() => {
     if (timer.current) {
       clearTimeout(timer.current);
